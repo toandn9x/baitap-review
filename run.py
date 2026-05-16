@@ -192,6 +192,8 @@ for r, item in enumerate(criteria, start + 1):
         style_cell(cell, fill=row_fill, alignment=align)
         if c in [4, 6, 7]:
             cell.font = Font(bold=True, color=navy)
+        if c in [8, 9, 11]:
+            cell.number_format = '@'
 
 score_validation = DataValidation(type='whole', operator='between', formula1='1', formula2='5', allow_blank=True)
 score_validation.error = 'Chỉ nhập điểm nguyên từ 1 đến 5'
@@ -217,10 +219,12 @@ ws.row_dimensions[summary_row].height = 28
 for title_cell, title, merge_range in parse_sections():
     ws[title_cell] = title
     style_cell(ws[title_cell], fill=yellow, font=Font(bold=True, color=navy), alignment=Alignment(vertical='center'))
+    ws[title_cell].number_format = '@'
     ws.merge_cells(merge_range)
     top_left = merge_range.split(':')[0]
     ws[top_left] = SECTION_PLACEHOLDER
     style_cell(ws[top_left], fill=light, font=Font(color=muted_text), alignment=Alignment(vertical='top', wrap_text=True))
+    ws[top_left].number_format = '@'
 
 ref = wb.create_sheet(REFERENCE_SHEET)
 ref.merge_cells('A1:E1')
